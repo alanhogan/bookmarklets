@@ -27,13 +27,20 @@ function allowTextSelectionWhenPossible() {
   }
 }
 
-if(window.jQuery) {
+if (window.jQuery) {
     window.console&&console.log('jQuery exists; will use');
   allowTextSelection();
-}else{
+} else {
   window.console&&console.log('jQuery not loaded; will include.');
   var s=document.createElement('script');
-  s.setAttribute('src','http://code.jquery.com/jquery-1.9.1.min.js');
+  s.setAttribute('src', 
+    // Hard to read, but the intention here is to set a protocol
+    // ONLY IF we are *not* running on HTTP or HTTPS already.
+    // That is to allow the script to work on e.g. file:/ URLs,
+    // but using the protocol-agnosting `//tld/file` format which allows
+    // the bookmarklet to run on HTTP & HTTPS pages, both. Should fix issue #2.
+    (document.location.toString().substr(0,4) === 'http' ? '' : 'http:') + '//code.jquery.com/jquery-1.9.1.min.js'
+  );
   document.getElementsByTagName('body')[0].appendChild(s);
   allowTextSelectionWhenPossible();
 }
