@@ -1,3 +1,6 @@
+// Note: Should be coverted to a bookmarklet with http://ted.mielczarek.org/code/mozilla/bookmarklet.html
+// because it properly ignores comments, unlike http://mrcoles.com/bookmarklet/
+
 (function(){
 
 function allowTextSelection(){
