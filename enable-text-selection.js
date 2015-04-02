@@ -3,15 +3,17 @@
 
 (function(){
 
-function allowTextSelection(){
+function allowTextSelection() {
   var styles='*,p,div{user-select:text !important;-moz-user-select:text !important;-webkit-user-select:text !important;}';
   jQuery('head').append(jQuery('<style />').html(styles));
   
-  window.console&&console.log('allowTextSelection');
+  window.console && console.log('allowTextSelection');
+  
   var allowNormal = function(){
     return true;
   };
-  window.console&&console.log('Elements unbound: '+
+  
+  window.console && console.log('Elements unbound: '+
     jQuery('*[onselectstart], *[ondragstart], *[oncontextmenu], #songLyricsDiv'
     ).unbind('contextmenu').unbind('selectstart').unbind('dragstart'
     ).unbind('mousedown').unbind('mouseup').unbind('click'
@@ -20,22 +22,22 @@ function allowTextSelection(){
 }
 
 function allowTextSelectionWhenPossible() {
-  window.console&&console.log('allowTextSelectionWhenPossible');
-  if(window.jQuery){
-    window.console&&console.log('jQuery has now loaded');
+  window.console && console.log('allowTextSelectionWhenPossible');
+  if (window.jQuery) {
+    window.console && console.log('jQuery has now loaded');
     allowTextSelection();
   } else {
-    window.console&&console.log('jQuery still not loaded.');
+    window.console && console.log('jQuery still not loaded.');
     window.setTimeout(allowTextSelectionWhenPossible, 100);
   }
 }
 
 if (window.jQuery) {
-    window.console&&console.log('jQuery exists; will use');
+    window.console && console.log('jQuery exists; will use');
   allowTextSelection();
 } else {
-  window.console&&console.log('jQuery not loaded; will include.');
-  var s=document.createElement('script');
+  window.console && console.log('jQuery not loaded; will include.');
+  var s = document.createElement('script');
   s.setAttribute('src', 
     // Hard to read, but the intention here is to set a protocol
     // ONLY IF we are *not* running on HTTP or HTTPS already.
