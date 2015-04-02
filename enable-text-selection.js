@@ -1,4 +1,4 @@
-javascript:(function(){
+(function(){
 
 function allowTextSelection(){
   var styles='*,p,div{user-select:text !important;-moz-user-select:text !important;-webkit-user-select:text !important;}';
