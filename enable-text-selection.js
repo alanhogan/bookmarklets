@@ -1,54 +1,41 @@
 // Note: Should be coverted to a bookmarklet with http://ted.mielczarek.org/code/mozilla/bookmarklet.html
 // because it properly ignores comments, unlike http://mrcoles.com/bookmarklet/
 
-(function(){
+(function () {
 
-function allowTextSelection() {
-  var styles='*,p,div{user-select:text !important;-moz-user-select:text !important;-webkit-user-select:text !important;}';
-  jQuery('head').append(jQuery('<style />').html(styles));
-  
-  window.console && console.log('allowTextSelection');
-  
-  var allowNormal = function(){
-    return true;
-  };
-  
-  window.console && console.log('Elements unbound: '+
-    jQuery('*[onselectstart], *[ondragstart], *[oncontextmenu], #songLyricsDiv'
-    ).unbind('contextmenu').unbind('selectstart').unbind('dragstart'
-    ).unbind('mousedown').unbind('mouseup').unbind('click'
-    ).attr('onselectstart',allowNormal).attr('oncontextmenu',allowNormal
-    ).attr('ondragstart',allowNormal).size());
-}
+    function allowTextSelection() {
+        window.console && console.log('allowTextSelection');
 
-function allowTextSelectionWhenPossible() {
-  window.console && console.log('allowTextSelectionWhenPossible');
-  if (window.jQuery) {
-    window.console && console.log('jQuery has now loaded');
+        //add styles that enable text selection
+        var style = document.createElement('style');
+        style.type = 'text/css';
+        style.innerHTML =
+            '*,p,div{user-select:text !important;-moz-user-select:text !important;-webkit-user-select:text !important;}';
+
+        document.head.appendChild(style);
+
+        //Put all of <body> children in a collection
+        //Use getElementsByTagName because it has better compatibility (it's older) than querySelectorAll('*')
+        var elArray = document.body.getElementsByTagName('*');
+
+        //allow mouse events typically involved in selection
+        for(var i=0; i<elArray.length; i++){
+            var el = elArray[i];
+            el.onselectstart = el.ondragstart = el.ondrag = el.oncontextmenu = el.onmousedown
+                = el.onmouseup = function(){return true};
+            
+            if(el instanceof HTMLInputElement && el.type == 'text'){
+                //enable text inputs (to defeat an easy way to block selection by setting input's 'disabled' attribute)
+                el.removeAttribute('disabled');
+                
+                //counteract any listener that would block copy&paste keyboard shortcuts. (I can't figure out yet why
+                // although this works on the first text input to replace an existing issue, it doesn't work on the 2nd
+                el.onkeydown = el.onkeyup = function(){return true};
+            }
+        }       
+
+    }
+
     allowTextSelection();
-  } else {
-    window.console && console.log('jQuery still not loaded.');
-    window.setTimeout(allowTextSelectionWhenPossible, 100);
-  }
-}
-
-if (window.jQuery) {
-    window.console && console.log('jQuery exists; will use');
-  allowTextSelection();
-} else {
-  window.console && console.log('jQuery not loaded; will include.');
-  var s = document.createElement('script');
-  s.setAttribute('src', 
-    // Hard to read, but the intention here is to set a protocol
-    // ONLY IF we are *not* running on HTTP or HTTPS already.
-    // That is to allow the script to work on e.g. file:/ URLs,
-    // but using the protocol-agnosting `//tld/file` format which allows
-    // the bookmarklet to run on HTTP & HTTPS pages, both. Should fix issue #2.
-    (document.location.toString().substr(0,4) === 'http' ? '' : 'http:') + '//code.jquery.com/jquery-1.9.1.min.js'
-  );
-  document.getElementsByTagName('body')[0].appendChild(s);
-  allowTextSelectionWhenPossible();
-}
-
 
 })();
