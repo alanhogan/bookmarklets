@@ -3,6 +3,15 @@
 
 (function () {
 
+    /**
+     * Adds CSS rules to undo user-select:none. Also cycles through every child of <body> and binds events associated
+     * with text selection to an benign function.  Finally, remove 'disabled' attributes from all text inputs and
+     * ensures that keydown and keyup events are allowed (to defeat blocks that prevent cut,copy, paste using shortcuts
+     * There is one concern though: binding to so many events will undoubtedly break functionality on some pages. For
+     * instance, text inputs very often have custom events bound to keypresses (eg to run a search and show results as
+     * the user types).  As a result, this script is probably not fit to run indiscriminately on all pages; it should
+     * rather be used only when the user needs to defeat text-selection blocks on specific pages.
+     */
     function allowTextSelection() {
         window.console && console.log('allowTextSelection');
 
