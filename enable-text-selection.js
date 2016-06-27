@@ -5,7 +5,7 @@
 
     /**
      * Adds CSS rules to undo user-select:none. Also cycles through every child of <body> and binds events associated
-     * with text selection to an benign function.  Finally, remove 'disabled' attributes from all text inputs and
+     * with text selection to a benign function.  Finally, remove 'disabled' attributes from all text inputs and
      * ensures that keydown and keyup events are allowed (to defeat blocks that prevent cut,copy, paste using shortcuts
      * There is one concern though: binding to so many events will undoubtedly break functionality on some pages. For
      * instance, text inputs very often have custom events bound to keypresses (eg to run a search and show results as
@@ -32,13 +32,16 @@
             var el = elArray[i];
             el.onselectstart = el.ondragstart = el.ondrag = el.oncontextmenu = el.onmousedown
                 = el.onmouseup = function(){return true};
-            
-            if(el instanceof HTMLInputElement && el.type == 'text'){
+
+            //special processing for text-style <input> elements
+            if(el instanceof HTMLInputElement &&
+                ['text','password','email','number','tel','url'].indexOf(el.type.toLowerCase()) > -1)
+            {
                 //enable text inputs (to defeat an easy way to block selection by setting input's 'disabled' attribute)
                 el.removeAttribute('disabled');
                 
                 //counteract any listener that would block copy&paste keyboard shortcuts. (I can't figure out yet why
-                // although this works on the first text input to replace an existing issue, it doesn't work on the 2nd
+                // although this works on the first text input in text-selection-demo.html, it doesn't work on the 2nd
                 el.onkeydown = el.onkeyup = function(){return true};
             }
         }       
