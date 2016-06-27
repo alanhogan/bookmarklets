@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Prevent text selection with CSS/JS</title>
+    <style type='text/css'>
+        .noselect {
+            -webkit-touch-callout: none; /* iOS Safari */
+            -webkit-user-select: none;   /* Chrome/Safari/Opera */
+            -khtml-user-select: none;    /* Konqueror */
+            -moz-user-select: none;      /* Firefox */
+            -ms-user-select: none;       /* Internet Explorer/Edge */
+            user-select: none;           /* Non-prefixed version, currently
+                                          not supported by any browser */
+        }
+        .box {padding:15px; border-radius:6px; border: 1px dashed black; max-width:600px;}
+        input {width:100%}
+    </style>
+</head>
+<body>
+<h2>Demo measures to prevent text selections</h2>
+<hr>
+<h4>Using CSS</h4>
+<div class='box noselect'>
+    Text selection in this section has been disabled using CSS only. We simply set the
+    user-select property and as well as its prefixed alternatives to 'none'.  This
+    method can be effective because it requires no JavaScript; Because CSS style sheets
+    are typically loaded in the &lt;HEAD&gt; of the document, they take effect immediately.
+    <br/><br/>
+    <input class="noselect" type="text" placeholder="enter text, then try to select it"
+           value="Can you copy this to your clipboard?">
+</div>
+
+<h4>Using JS events bound by html attributes</h4>
+<div class='box' ondragstart="blockSelections(event)"
+     onmousedown="blockSelections(event)" onmouseup="blockSelections(event)"
+     oncontextmenu="blockSelections(event)" onselect="blockSelections(event)">
+
+    Text selection in this section has been disabled by setting the HTML attributes
+    that bind to event handlers.  The attributes 'onmousedown', 'onmouseup', 'oncontextmenu',
+    and 'onselect' were all set to a JavaScript function that blocks typical browser behavior
+    by calling event.preventDefault(). To the textbox below we also added an onkeydown handler
+    that prevents the typical copy, cut and paste shortcuts.
+    <br/><br/>
+    <input  ondragstart="blockSelections(event)"
+            onmousedown="blockSelections(event)" onmouseup="blockSelections(event)"
+            oncontextmenu="blockSelections(event)" onselect="blockSelections(event)"
+            onkeydown="interceptKeys(event)"
+            type="text" placeholder="enter text, then try to copy it"
+            value="What about this text? Can you copy this?">
+</div>
+
+<h4>Using purely Javascript</h4>
+<div id="one" class="box">
+    Text selection in this section has been disabled by setting 'onmousedown', 'onmouseup'... properties
+    to the same function as in the previous section. The only difference is that in the HTML attributes
+    that bind to event handlers were set not in HTML as was done above, but in JavaScript. Selection
+    within the textbox was disabled in JavaScript as well (not in HTML). In addition, the 'disabled'
+    attribute was set. This is one of the easiest and most effective ways to prevent
+    selection because the browser blocks all interactions with the disabled textbox.
+    <br/><br/>
+    <input id="two" type="text" placeholder="enter text, then try to copy it"
+           value="And finally... can you copy this?">
+</div>
+
+<script type="application/javascript">
+    function blockSelections(e){
+        console.log('preventing "'+e.type+'"');
+        e.preventDefault();
+    }
+
+    /**
+     * Prevent copy, cut and paste keyboard shortcuts
+     * Inspired by cryo's answer on http://stackoverflow.com/questions/2903991/how-to-detect-ctrlv-ctrlc-using-javascript
+     * @param e
+     */
+    function interceptKeys(e) {
+        e = e||window.event; // IE support
+        var c = e.key;
+        var ctrlDown = e.ctrlKey||e.metaKey; // Mac support
+        var allowed = true;
+
+        // Allow if other modifier keys are pressed (since they're not used in
+        //typical copy+paste shortcuts
+        if (e.altKey || e.shiftKey) allowed=true;
+
+        // Check for ctrl+c, v and x
+        else if (ctrlDown && (c==='c' || c==='x' || c==='v')) allowed=false;
+
+        if(!allowed){
+            console.log('preventing "'+e.type+'"'); console.log(e);
+            e.preventDefault();
+        }
+    }
+
+    (function(){
+        var elToBlock = document.querySelectorAll('#one,#two');
+
+        var count = elToBlock.length;
+        for (var i=0; i<count;i++){
+            var el = elToBlock[i];
+            el.ondragstart = el.onmousedown = el.onmouseup = el.onselect
+                    = el.oncontextmenu = el.onselectstart = blockSelections;
+
+            el.addEventListener('keydown',interceptKeys);
+            if(i===1) el.setAttribute('disabled','')
+        }
+
+
+    })();
+</script>
+</body>
+</html>
