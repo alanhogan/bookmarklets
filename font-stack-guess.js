@@ -68,7 +68,7 @@ function guessBodyFont(fullReport) {
     var reportStr = "BODY element is probably using the font family or keyword: \n" + probableFont;
     if (fullReport) {
       reportStr = reportStr + "\n\n" + "All matching font names or keywords in the stack: \n" + availableFonts.join("\n") + "\n\n" + "Unavailable fonts: \n" + (unavailableFonts.length > 0 ? unavailableFonts.join("\n") : '(None)') + "\n\n" + "Font stack as reported by getComputedStyle: \n" + stack;
-      reportStr = reportStr + "\n\nOnly Latins characters are tested, so detection will fail for Asian fonts, emojis, and system fonts. ";
+      reportStr = reportStr + "\n\nOnly Latin characters are tested, so detection will fail for Asian fonts, emojis, and system fonts. ";
     } else {
       reportStr = reportStr + "\n\n"
     }
