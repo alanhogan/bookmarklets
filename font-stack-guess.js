@@ -58,9 +58,7 @@ function guessUsedFont(fullReport) {
       stack = window.getComputedStyle(selectedEl).fontFamily;
       selectionExamined = !! stack;
     }
-  } catch (err) {
-    console.error(err);
-  }
+  } catch (err) { }
 
 
   var fonts = stack.split(/\s*,\s*/).map(function (font) {
