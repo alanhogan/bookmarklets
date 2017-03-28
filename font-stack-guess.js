@@ -52,9 +52,12 @@ function guessUsedFont(fullReport) {
   var selectionExamined = false;
 
   try {
-    var selectedEl = window.getSelection().anchorNode.parentElement
-    stack = window.getComputedStyle(selectedEl).fontFamily;
-    selectionExamined = !! stack;
+    var selection = window.getSelection();
+    if (selection.toString().length > 0) {
+      var selectedEl = selection.anchorNode.parentElement;
+      stack = window.getComputedStyle(selectedEl).fontFamily;
+      selectionExamined = !! stack;
+    }
   } catch (err) {
     console.error(err);
   }
