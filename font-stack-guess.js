@@ -5,7 +5,7 @@
 // Some code has been previously converted by the Babel REPL to survive
 // running in IE11. Avoid ES6 or transpile before committing updates.
 
-var versionStr = '1.0';
+var versionStr = '2.0';
 
 var Detector = function Detector() {
   var baseFonts = ['monospace', 'sans-serif', 'serif'];
@@ -46,9 +46,20 @@ var Detector = function Detector() {
 
 var d = new Detector();
 
-function guessBodyFont(fullReport) {
+function guessUsedFont(fullReport) {
   var body = document.getElementsByTagName('body')[0];
   var stack = body ? window.getComputedStyle(body).fontFamily : '';
+  var selectionExamined = false;
+
+  try {
+    var selectedEl = window.getSelection().anchorNode.parentElement
+    stack = window.getComputedStyle(selectedEl).fontFamily;
+    selectionExamined = !! stack;
+  } catch (err) {
+    console.error(err);
+  }
+
+
   var fonts = stack.split(/\s*,\s*/).map(function (font) {
     return font.replace(/^['"]\s*(.+\S)\s*['"]$/, '$1');
   });
@@ -65,7 +76,7 @@ function guessBodyFont(fullReport) {
   });
 
   if (probableFont) {
-    var reportStr = "BODY element is probably using the font family or keyword: \n" + probableFont;
+    var reportStr = (selectionExamined ? 'The selected text' : 'The BODY element') + " is probably using the font family or keyword: \n" + probableFont;
     if (fullReport) {
       reportStr = reportStr + "\n\n" + "All matching font names or keywords in the stack: \n" + availableFonts.join("\n") + "\n\n" + "Unavailable fonts: \n" + (unavailableFonts.length > 0 ? unavailableFonts.join("\n") : '(None)') + "\n\n" + "Font stack as reported by getComputedStyle: \n" + stack;
       reportStr = reportStr + "\n\nOnly Latin characters are tested, so detection will fail for Asian fonts, emojis, and system fonts. ";
@@ -81,14 +92,14 @@ function guessBodyFont(fullReport) {
     
     alert(reportStr);
   } else {
-    alert('Did not detect a font set for body');
+    alert('Did not detect any fonts');
   }
 }
 
-function fullBodyFontStackReport() {
-  guessBodyFont(true);
+function fullFontStackReport() {
+  guessUsedFont(true);
 }
 
 // Uncomment ONE of these to generate the simple vs full version of the bookmarklet.
-// guessBodyFont();
-fullBodyFontStackReport();
+// guessUsedFont();
+fullFontStackReport();
