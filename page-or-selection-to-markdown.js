@@ -1,5 +1,8 @@
 // crunch at https://alanhogan.github.io/bookmarkleter/
 
+// todo: turn relative URLs into fully qualified ones.
+// see https://stackoverflow.com/questions/43261898/in-vanilla-javascript-turn-relative-path-base-url-into-absolute-url
+
 var html = false,
     selection, content, range, div, title;
 
