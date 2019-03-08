@@ -1,3 +1,9 @@
+/*
+ *  Bookmarkletify at
+ *  https://alanhogan.github.io/bookmarkleter/
+ */
+
+
 var version = '1.2';
 var name = 'com.alanhogan.bookmarklets.mark-visited.' + version;
 
