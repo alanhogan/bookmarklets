@@ -24,14 +24,8 @@ function allowTextSelection() {
 
   document.head.appendChild(style);
 
-  //Put all of <body> children in a collection
-  //Use getElementsByTagName because it has better compatibility (it's older) than querySelectorAll('*')
-  var elArray = document.body.getElementsByTagName("*");
-
-  //allow mouse events typically involved in selection
-  for (var i = 0; i < elArray.length; i++) {
-    var el = elArray[i];
-    el.onselectstart = el.ondragstart = el.ondrag = el.oncontextmenu = el.onmousedown = el.onmouseup = function() {
+  function clear(el) {
+    el.onselectstart = el.ondragstart = el.ondrag = el.oncontextmenu = el.onmousedown = el.onmouseup = function () {
       return true;
     };
 
@@ -47,11 +41,25 @@ function allowTextSelection() {
 
       //counteract any listener that would block copy&paste keyboard shortcuts. (I can't figure out yet why
       // although this works on the first text input in text-selection-demo.html, it doesn't work on the 2nd
-      el.onkeydown = el.onkeyup = function() {
+      el.onkeydown = el.onkeyup = function () {
         return true;
       };
     }
   }
+
+  //Put all of <body> children in a collection
+  //Use getElementsByTagName because it has better compatibility (it's older) than querySelectorAll('*')
+  var elArray = document.body.getElementsByTagName("*");
+
+  //allow mouse events typically involved in selection
+  for (var i = 0; i < elArray.length; i++) {
+    clear(elArray[i])
+  }
+
+  clear(document.body)
+  clear(document)
+
 }
 
 allowTextSelection();
+
