@@ -1,4 +1,4 @@
-/* v1.1 */
+/* v1.2 */
 const style = document.createElement('style');
 style.type = 'text/css';
 style.innerText = `
@@ -39,6 +39,7 @@ style.innerText = `
   filter: hue-rotate(-24deg) brightness(1.1) !important;
   outline: #eebb22a0 solid 5px !important;
   outline-offset: -2px !important;
+  text-shadow: 0.04em 0.04em 0.04em #0008, -0.04em -0.04em 0.04em #fff8;
   
   backdrop-filter: contrast(0.7);
 
