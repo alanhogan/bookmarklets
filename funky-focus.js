@@ -1,3 +1,4 @@
+/* v1.1 */
 const style = document.createElement('style');
 style.type = 'text/css';
 style.innerText = `
@@ -36,9 +37,10 @@ style.innerText = `
 :focus {
   /* FYI: Filters won't work on non-replaced inline boxes e.g. spans, links, etc without a change in the display property */
   filter: hue-rotate(-24deg) brightness(1.1) !important;
-  outline: #eecc44a0 solid 5px !important;
+  outline: #eebb22a0 solid 5px !important;
   outline-offset: -2px !important;
   
+  backdrop-filter: contrast(0.7);
 
   animation-name: ffwiggle;
   animation-duration: 6s;
