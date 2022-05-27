@@ -1,4 +1,4 @@
-const VERSION = "1.1";
+const VERSION = "1.1.1";
 const messageSuffix = "\n\n--pip.js version v"+VERSION+"\nalanhogan.com/bookmarklets";
 
 if (!document.pictureInPictureEnabled) {
@@ -8,7 +8,7 @@ if (!document.pictureInPictureEnabled) {
 
 const videos = document.getElementsByTagName("video");
 if (videos.length < 1) {
-  alert("No HTML5 videos were detected on page! Note: The current version of this script does not deal with iFrames" + (document.getElementsByTagName('iframe').length ? " and there is at least one on the page." : ", but there are none detected on this page." ) + "." + messageSuffix);
+  alert("No HTML5 videos were detected on page! Note: The current version of this script does not deal with iFrames" + (document.getElementsByTagName('iframe').length ? " and there is at least one on the page." : ", but there are none detected on this page." ) + messageSuffix);
   return;
 }
 
