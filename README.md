@@ -2,7 +2,7 @@
 
 A collection of bookmarklets!
 
-Bookmarklets (aka favelets) in this repository are stored as nicely formatted JavaScript, easy to edit and understand. They are closely mirrored in more usable form at <https://alanhogan.com/bookmarklets>.
+Bookmarklets (aka favelets) in this repository are stored as nicely formatted JavaScript, easy to edit and understand. They are closely mirrored in more usable form at <https://alanhogan.com/bookmarklets> for easy installation.
 
 ## Converting to Bookmarklet Form
 
