@@ -1,6 +1,6 @@
 /* This should probably have ES6 to ES5 transpilation on when compiling to bookmarklet */
 
-const version = '1.1';
+const version = '1.2';
 
 const styles = `
 html, body, p, li, a, input, textarea, button, *:not([class*="icon"] ) {
@@ -8,7 +8,6 @@ html, body, p, li, a, input, textarea, button, *:not([class*="icon"] ) {
 }
 `;
 
-const newSS = document.createElement('link');
-newSS.rel = 'stylesheet';
-newSS.href = 'data:text/css,' + escape(styles);
-document.getElementsByTagName("head")[0].appendChild(newSS);
+const styleElement = (document.getElementsByTagName('head')[0]||document.body).appendChild(document.createElement('style'));
+const textNode = document.createTextNode(styles);
+styleElement.appendChild(textNode);
