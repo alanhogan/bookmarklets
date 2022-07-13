@@ -7,7 +7,7 @@ const version = '1.0';
 
 const customStylesheets = document.querySelectorAll('style[data-ah-bookmarklet-inserted]');
 if (customStylesheets.length < 1) {
-  alert("No custom stylesheets inserted with the corresponding bookmarklet can been found. https://alanhogan.com/bookmarklets");
+  alert("No custom stylesheets inserted with the corresponding bookmarklet can been found. https://alanhogan.com/bookmarklets#add_css");
 }
 customStylesheets.forEach((stylesheet) => {
   stylesheet.parentElement.removeChild(stylesheet);
