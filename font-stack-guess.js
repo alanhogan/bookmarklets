@@ -5,7 +5,7 @@
 // Some code has been previously converted by the Babel REPL to survive
 // running in IE11. Avoid ES6 or transpile before committing updates.
 
-var versionStr = '2.0';
+var versionStr = '2.1';
 
 var Detector = function Detector() {
   var baseFonts = ['monospace', 'sans-serif', 'serif'];
@@ -29,10 +29,15 @@ var Detector = function Detector() {
     h.removeChild(s);
   }
 
+  function quotedFontIfNecessary(fontName) {
+    if(/\s/.test(fontName)) { return '\'' + fontName + '\''; }
+    else return fontName;
+  }
+
   function detect(font) {
     var detected = false;
     for (var index in baseFonts) {
-      s.style.fontFamily = '\'' + font + '\', ' + baseFonts[index];
+      s.style.fontFamily = quotedFontIfNecessary(font) + ', ' + baseFonts[index];
       h.appendChild(s);
       var matched = s.offsetWidth != defaultWidth[baseFonts[index]] || s.offsetHeight != defaultHeight[baseFonts[index]];
       h.removeChild(s);
