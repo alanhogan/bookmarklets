@@ -1,7 +1,8 @@
-// Detector from http://www.lalit.org/lab/javascript-css-font-detect/
+// Detector from <https://web.archive.org/web/20171117015648/http://www.lalit.org/lab/javascript-css-font-detect/>
 // Other code by Alan Hogan
 // http://www.apache.org/licenses/LICENSE-2.0
-// Compile this to a bookmarklet at http://bookmarklets.org/maker/
+// Compile this to a bookmarklet at <https://alanhogan.github.io/bookmarkleter/>
+// (originally this bookmarklet used <http://bookmarklets.org/maker/>)
 // Some code has been previously converted by the Babel REPL to survive
 // running in IE11. Avoid ES6 or transpile before committing updates.
 
