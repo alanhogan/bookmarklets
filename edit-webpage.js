@@ -1,15 +1,3 @@
-if ( ! document.body.contentEditable)
-{
-  document.body.contentEditable = 'true';
-  document.designMode='on';
-} else { 
-  document.body.contentEditable = 'false';
-  document.designMode='off';
-}
-
-document.body.contentEditable = 'true';
-document.designMode='on';
-
 const alert = document.createElement('div');
 alert.style = `
   position: fixed;
@@ -24,7 +12,23 @@ alert.style = `
   padding: 0.4em;
   transition: opacity 1s ease-in;
 `;
-alert.innerText = 'This web page should now be editable!' 
+
+if (document.body.contentEditable !== 'true')
+{
+  document.body.contentEditable = 'true';
+  document.designMode='on';
+  
+  alert.innerText = 'This web page should now be editable!' 
+} else { 
+  document.body.contentEditable = 'false';
+  document.designMode='off';
+  
+  alert.style.color = '#621';
+  alert.style.backgroundColor = '#eaad';
+  alert.innerText = 'Whole-page editing disabled!' ;
+}
+
+
 
 // '(This is the edit-webpage bookmarklet from at alanhogan.com/bookmarklets)';
 
@@ -36,5 +40,6 @@ setTimeout(() => {
 3000);
 
 setTimeout(() => {
+  alert.remove();
 },
 4000);
